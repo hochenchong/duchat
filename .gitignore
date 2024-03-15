@@ -38,3 +38,5 @@ build/
 ### Mac OS ###
 .DS_Store
 
+### 生产环境的配置不提交
+application-prod.properties

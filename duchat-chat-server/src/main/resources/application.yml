@@ -1,0 +1,27 @@
+spring:
+  profiles:
+    # 运行的环境
+    active: test
+  application:
+    name: duchat
+  datasource:
+    url: jdbc:mysql://${duchat.mysql.ip}:${duchat.mysql.port}/${duchat.mysql.db}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: ${duchat.mysql.username}
+    password: ${duchat.mysql.password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    redis:
+      # Redis服务器地址
+      host: ${duchat.redis.host}
+      # Redis服务器端口号
+      port: ${duchat.redis.port}
+      # 使用的数据库索引，默认是0
+      database: 0
+      # 连接超时时间
+      timeout: 1800000
+      # 设置密码
+      password: ${duchat.redis.password}
+  jackson:
+    serialization:
+      # 将 data 转化为时间戳
+      write-dates-as-timestamps: true
