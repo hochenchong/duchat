@@ -71,9 +71,17 @@
                 <artifactId>mybatis</artifactId>
                 <version>${mybatis.version}</version>
             </dependency>
+            <!-- mybatis-plus -->
+            <!-- Spring Boot2 引入这个，springboot3 引入下面那个
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus-boot-starter.version}</version>
+            </dependency>
+            -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
                 <version>${mybatis-plus-boot-starter.version}</version>
             </dependency>
             <dependency>
