@@ -25,3 +25,16 @@ spring:
     serialization:
       # 将 data 转化为时间戳
       write-dates-as-timestamps: true
+
+wx:
+  mp:
+    useRedis: false
+    redisConfig:
+      host: 127.0.0.1
+      port: 6379
+    callback: ${duchat.wx.callback}
+    configs:
+      - appId: ${duchat.wx.appId} # 第一个公众号的appid
+        secret: ${duchat.wx.secret} # 公众号的appsecret
+        token: ${duchat.wx.token} # 接口配置里的Token值
+        # aesKey: ${duchat.wx.aesKey} # 接口配置里的EncodingAESKey值，测试号不需要填
