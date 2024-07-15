@@ -3,6 +3,7 @@ package hochenchong.duchat.common;
 import hochenchong.duchat.common.common.utils.JwtUtils;
 import hochenchong.duchat.common.user.dao.UserDao;
 import hochenchong.duchat.common.user.domain.entity.User;
+import hochenchong.duchat.common.utils.RedisUtils;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,12 @@ public class DaoTest {
         System.out.println(jwtUtils.createToken(1L));
         System.out.println(jwtUtils.createToken(1L));
         System.out.println(jwtUtils.createToken(1L));
+    }
+
+    @Test
+    public void testRedis() {
+        RedisUtils.set("测试", "测试一下");
+        String str = RedisUtils.getStr("测试");
+        System.out.println(str);
     }
 }
