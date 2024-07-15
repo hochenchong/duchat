@@ -16,7 +16,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.3</version>
+        <version>3.3.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -29,7 +29,7 @@
         <skipTests>true</skipTests>
         <hutool.version>5.8.26</hutool.version>
         <lombok.version>1.18.30</lombok.version>
-        <netty-all.version>4.1.107.Final</netty-all.version>
+        <netty-all.version>4.1.111.Final</netty-all.version>
         <mysql-connector.version>8.0.33</mysql-connector.version>
         <mybatis.version>3.5.15</mybatis.version>
         <mybatis-plus-boot-starter.version>3.5.5</mybatis-plus-boot-starter.version>
