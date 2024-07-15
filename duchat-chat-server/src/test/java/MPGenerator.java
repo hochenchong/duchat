@@ -17,7 +17,7 @@ import java.sql.Types;
  * @since 2024-03-19
  */
 public class MPGenerator {
-    private static final String URL = "jdbc:mysql://127.0.0.1:3306/duchat?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC";
+    private static final String URL = "jdbc:mysql://127.0.0.1:3306/duchat?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai";
 
     public static void main(String[] args) {
         FastAutoGenerator.create(URL, "root", "mysql8.0")
