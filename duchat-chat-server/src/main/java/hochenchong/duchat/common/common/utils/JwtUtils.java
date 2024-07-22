@@ -48,8 +48,8 @@ public class JwtUtils {
     /**
      * 解密Token
      *
-     * @param token
-     * @return
+     * @param token token信息
+     * @return 解析
      */
     public Map<String, Claim> verifyToken(String token) {
         if (StringUtils.isEmpty(token)) {
@@ -69,8 +69,8 @@ public class JwtUtils {
     /**
      * 根据Token获取uid
      *
-     * @param token
-     * @return uid
+     * @param token token信息
+     * @return uid 用户id
      */
     public Long getUidOrNull(String token) {
         return Optional.ofNullable(verifyToken(token))
