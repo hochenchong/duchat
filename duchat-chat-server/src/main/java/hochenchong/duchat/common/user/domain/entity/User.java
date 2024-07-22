@@ -36,6 +36,10 @@ public class User implements Serializable {
     @TableField("name")
     private String name;
 
+    @ApiModelProperty("用户密码")
+    @TableField("password")
+    private String password;
+
     @ApiModelProperty("用户头像")
     @TableField("avatar")
     private String avatar;

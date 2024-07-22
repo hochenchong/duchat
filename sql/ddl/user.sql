@@ -3,6 +3,7 @@ CREATE TABLE `t_user`
 (
     `id`            bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户id',
     `name`          varchar(20) COLLATE utf8mb4_unicode_ci  DEFAULT NULL COMMENT '用户昵称',
+    `password`      varchar(255)  NOT NULL COMMENT '用户密码',
     `avatar`        varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '用户头像',
     `sex`           int(11) DEFAULT NULL COMMENT '性别 1为男性，2为女性',
     `open_id`       char(32) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '微信openid用户标识',
