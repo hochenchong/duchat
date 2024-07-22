@@ -6,6 +6,8 @@ import hochenchong.duchat.common.user.domain.entity.User;
 import hochenchong.duchat.common.utils.RedisUtils;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -42,5 +44,17 @@ public class DaoTest {
         RedisUtils.set("测试", "测试一下");
         String str = RedisUtils.getStr("测试");
         System.out.println(str);
+    }
+
+    @Autowired
+    private RedissonClient redissonClient;
+
+    @Test
+    public void testRedisLock() {
+        RLock lock = redissonClient.getLock("123");
+        lock.lock();
+        System.out.println();
+        lock.unlock();
+
     }
 }
