@@ -1,5 +1,6 @@
 package hochenchong.duchat.common;
 
+import hochenchong.duchat.common.common.config.ThreadPoolConfig;
 import hochenchong.duchat.common.common.utils.JwtUtils;
 import hochenchong.duchat.common.user.dao.UserDao;
 import hochenchong.duchat.common.user.domain.entity.User;
@@ -9,7 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 @SpringBootTest
 public class DaoTest {
@@ -55,6 +58,19 @@ public class DaoTest {
         lock.lock();
         System.out.println();
         lock.unlock();
+    }
 
+    @Autowired
+    @Qualifier(ThreadPoolConfig.DUCHAT_EXECUTOR)
+    private ThreadPoolTaskExecutor threadPoolTaskExecutor;
+
+    @Test
+    public void testThread() throws InterruptedException {
+        threadPoolTaskExecutor.execute(() -> {
+            if (1 == 1) {
+                throw new RuntimeException("123");
+            }
+        });
+        Thread.sleep(200);
     }
 }
