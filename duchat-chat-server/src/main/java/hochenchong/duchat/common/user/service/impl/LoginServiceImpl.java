@@ -2,11 +2,16 @@ package hochenchong.duchat.common.user.service.impl;
 
 import hochenchong.duchat.common.common.constant.RedisKey;
 import hochenchong.duchat.common.common.utils.JwtUtils;
+import hochenchong.duchat.common.common.utils.PasswordUtil;
+import hochenchong.duchat.common.user.dao.UserDao;
+import hochenchong.duchat.common.user.domain.entity.User;
 import hochenchong.duchat.common.user.service.LoginService;
 import hochenchong.duchat.common.utils.RedisUtils;
+import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -17,12 +22,29 @@ import java.util.concurrent.TimeUnit;
  * @author hochenchong
  * @date 2024/07/15
  */
+@Service
 public class LoginServiceImpl implements LoginService {
     @Autowired
     private JwtUtils jwtUtils;
 
+    @Resource
+    private UserDao userDao;
+
     public static final int TOKEN_EXPIRE_DAYS = 3;
     public static final int TOKEN_RENEWAL_DAYS = 1;
+
+    @Override
+    public User userLogin(String name, String password) {
+        User user = userDao.getByName(name);
+        if (user == null) {
+            return null;
+        }
+        // 校验密码，如果通过，则返回用户
+        if (PasswordUtil.checkPassword(password, user.getPassword())) {
+            return user;
+        }
+        return null;
+    }
 
     @Override
     public boolean verify(String token) {
@@ -78,7 +100,7 @@ public class LoginServiceImpl implements LoginService {
         if (Objects.isNull(uid)) {
             return null;
         }
-        String oldToken = RedisUtils.get(getUserTokenKey(uid));
+        String oldToken = RedisUtils.getStr(getUserTokenKey(uid));
         if (StringUtils.isBlank(oldToken)) {
             return null;
         }

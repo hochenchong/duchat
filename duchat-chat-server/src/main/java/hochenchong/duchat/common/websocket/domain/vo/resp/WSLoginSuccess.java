@@ -15,7 +15,9 @@ public class WSLoginSuccess {
     private String token;
     private String name;
     /**
-     * 用户权限 0普通用户 1超管
+     * 用户权限
+     *  0：普通用户
+     *  1：超管
      */
     private Integer power;
 }

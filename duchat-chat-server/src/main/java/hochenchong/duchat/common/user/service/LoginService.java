@@ -1,10 +1,16 @@
 package hochenchong.duchat.common.user.service;
 
+import hochenchong.duchat.common.user.domain.entity.User;
+
 /**
+ * 登录服务
+ *
  * @author hochenchong
  * @date 2024/07/15
  */
 public interface LoginService {
+    User userLogin(String username, String password);
+
     /**
      * 校验 token 是不是有效
      *

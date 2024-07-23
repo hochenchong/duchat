@@ -17,4 +17,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDao extends ServiceImpl<UserMapper, User> implements IUserService {
 
+    /**
+     * 通过用户名来查询用户
+     *
+     * @param name 用户名
+     * @return 用户
+     */
+    public User getByName(String name) {
+        return lambdaQuery().eq(User::getName, name).one();
+    }
+
+    /**
+     * 通过 OpenId 来查询用户
+     *
+     * @param openId openId
+     * @return 用户
+     */
+    public User getByOpenId(String openId) {
+        return lambdaQuery().eq(User::getOpenId, openId).one();
+    }
 }
