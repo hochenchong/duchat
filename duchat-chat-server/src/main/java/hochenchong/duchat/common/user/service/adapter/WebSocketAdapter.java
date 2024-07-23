@@ -21,6 +21,12 @@ public class WebSocketAdapter {
         return resp;
     }
 
+    public static <T> WSBaseResp<T> buildResp(WSRespTypeEnum typeEnum) {
+        WSBaseResp<T> resp = new WSBaseResp<>();
+        resp.setType(typeEnum.getType());
+        return resp;
+    }
+
     public static WSBaseResp<?> buildResp(WxMpQrCodeTicket wxMpQrCodeTicket) {
         WSBaseResp<WSLoginUrl> resp = new WSBaseResp<>();
         resp.setType(WSRespTypeEnum.LOGIN_URL.getType());

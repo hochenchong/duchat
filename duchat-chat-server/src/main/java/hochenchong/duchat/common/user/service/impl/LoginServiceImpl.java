@@ -48,7 +48,13 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public boolean verify(String token) {
-        return false;
+        Long uid = jwtUtils.getUidOrNull(token);
+        if (Objects.isNull(uid)) {
+            return false;
+        }
+        // 有可能 token 已经失效了，需要校验和 redis 里的最新 token 是否一致
+        String realToken = RedisUtils.getStr(RedisKey.getKey(RedisKey.USER_TOKEN_STRING, uid));
+        return Objects.equals(token, realToken);
     }
 
     /**

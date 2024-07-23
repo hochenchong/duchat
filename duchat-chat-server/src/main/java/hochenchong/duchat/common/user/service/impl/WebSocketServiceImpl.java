@@ -5,6 +5,7 @@ import cn.hutool.core.util.RandomUtil;
 import cn.hutool.json.JSONUtil;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import hochenchong.duchat.common.user.dao.UserDao;
 import hochenchong.duchat.common.user.domain.entity.User;
 import hochenchong.duchat.common.user.service.LoginService;
 import hochenchong.duchat.common.user.service.WebSocketService;
@@ -40,6 +41,8 @@ public class WebSocketServiceImpl implements WebSocketService {
     private WxMpService wxMpService;
     @Autowired
     private LoginService loginService;
+    @Autowired
+    private UserDao userDao;
 
     /**
      * 管理所有用户的连接（登录/游客）
@@ -66,6 +69,12 @@ public class WebSocketServiceImpl implements WebSocketService {
         sendMsg(channel, resp);
     }
 
+    /**
+     * 用户通过账号密码登录
+     *
+     * @param channel 用户连接的 channel
+     * @param wsBaseReq 用户登录携带的信息
+     */
     @Override
     public void userLoginReq(Channel channel, WSBaseReq wsBaseReq) {
         String data = wsBaseReq.getData();
@@ -136,6 +145,16 @@ public class WebSocketServiceImpl implements WebSocketService {
 
     @Override
     public void authorize(Channel channel, String token) {
-
+        // 校验 token
+        boolean verify = loginService.verify(token);
+        if (verify) {
+            // 通过 token 获取 uid，如果获取到用户，则登录
+            User user = userDao.getById(loginService.getValidUid(token));
+            if (user != null) {
+                loginSuccess(channel, user, token);
+                return;
+            }
+        }
+        sendMsg(channel, WebSocketAdapter.buildResp(WSRespTypeEnum.INVALIDATE_TOKEN));
     }
 }
