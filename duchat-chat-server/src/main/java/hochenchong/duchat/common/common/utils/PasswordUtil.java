@@ -1,7 +1,5 @@
 package hochenchong.duchat.common.common.utils;
 
-import org.springframework.security.crypto.bcrypt.BCrypt;
-
 public class PasswordUtil {
 
     /**
