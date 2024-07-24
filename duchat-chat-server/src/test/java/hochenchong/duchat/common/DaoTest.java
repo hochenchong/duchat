@@ -4,6 +4,7 @@ import hochenchong.duchat.common.common.config.ThreadPoolConfig;
 import hochenchong.duchat.common.common.utils.JwtUtils;
 import hochenchong.duchat.common.user.dao.UserDao;
 import hochenchong.duchat.common.user.domain.entity.User;
+import hochenchong.duchat.common.user.service.LoginService;
 import hochenchong.duchat.common.utils.RedisUtils;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,14 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 public class DaoTest {
     @Resource
     private UserDao userDao;
+
+    @Autowired
+    private LoginService loginService;
+
+    @Test
+    public void testGetToken() {
+        System.out.println(loginService.login(1L));
+    }
 
 
     @Test
