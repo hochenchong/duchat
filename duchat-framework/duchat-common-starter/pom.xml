@@ -64,12 +64,15 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
         <!-- 引入封装过的 swagger2 -->
+        <!-- SpringBoot 3 引入该依赖的 Knife4j，官方教程：https://doc.xiaominfo.com/docs/quick-start -->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
-            <version>3.0.3</version>
+            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+            <version>4.5.0</version>
         </dependency>
-        <!-- 引入 springboot 测试工具 -->
+
+
+        <!-- 引入 SpringBoot 测试工具 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

@@ -1,6 +1,6 @@
 package hochenchong.duchat.common.websocket.domain.vo.resp;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,10 +16,10 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChatMemberResp {
-    @ApiModelProperty("uid")
+    @Schema(description = "uid")
     private Long uid;
-    @ApiModelProperty("在线状态 1在线 2离线")
+    @Schema(description = "在线状态 1在线 2离线")
     private Integer activeStatus;
-    @ApiModelProperty("最后一次上下线时间")
+    @Schema(description = "最后一次上下线时间")
     private Date lastOptTime;
 }

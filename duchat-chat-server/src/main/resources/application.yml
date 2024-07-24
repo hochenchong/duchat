@@ -43,3 +43,30 @@ wx:
 duchat:
   jwt:
     secret: ${duchat.jwt.secret}
+
+# springdoc-openapi 项目配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: hochenchong.duchat.common.user.controller
+# knife4j 的增强配置，不需要增强可以不配
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+    # 自定义 Footer
+    enable-footer: false
+    enable-footer-custom: true
+    footer-custom-content: Copyright  2024-[Hochenchong](https://github.com/hochenchong)
+  # 是否开启 BasicHttp 校验
+  basic:
+    enable: false
+    username: test
+    password: 12313
