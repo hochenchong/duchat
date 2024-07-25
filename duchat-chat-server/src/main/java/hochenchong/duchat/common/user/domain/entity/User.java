@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -25,6 +26,7 @@ import lombok.Setter;
 @Schema(name = "User 对象", description = "用户表")
 public class User implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Schema(description = "用户id")
@@ -49,7 +51,7 @@ public class User implements Serializable {
 
     @Schema(description = "性别 1为男性，2为女性")
     @TableField("sex")
-    private Integer sex;
+    private int sex;
 
     @Schema(description = "微信openid用户标识")
     @TableField("open_id")
@@ -57,7 +59,7 @@ public class User implements Serializable {
 
     @Schema(description = "在线状态 1在线 2离线")
     @TableField("active_status")
-    private Integer activeStatus;
+    private int activeStatus;
 
     @Schema(description = "最后上下线时间")
     @TableField("last_opt_time")
@@ -69,11 +71,11 @@ public class User implements Serializable {
 
     @Schema(description = "佩戴的徽章id")
     @TableField("item_id")
-    private Long itemId;
+    private int itemId;
 
     @Schema(description = "使用状态 0.正常 1拉黑")
     @TableField("status")
-    private Integer status;
+    private int status;
 
     @Schema(description = "创建时间")
     @TableField(value = "create_time", fill = FieldFill.INSERT)

@@ -23,4 +23,9 @@ public class ItemCache {
     public List<ItemConfig> getByType(int itemType) {
         return itemConfigDao.getByType(itemType);
     }
+
+    @Cacheable(value = "item", key = "'itemsById:'+#itemId")
+    public ItemConfig getById(Integer itemId) {
+        return itemConfigDao.getById(itemId);
+    }
 }

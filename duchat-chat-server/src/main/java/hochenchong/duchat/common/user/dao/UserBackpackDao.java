@@ -5,6 +5,7 @@ import hochenchong.duchat.common.common.domain.enums.TF;
 import hochenchong.duchat.common.user.domain.entity.UserBackpack;
 import hochenchong.duchat.common.user.mapper.UserBackpackMapper;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 /**
  * <p>
@@ -48,5 +49,13 @@ public class UserBackpackDao extends ServiceImpl<UserBackpackMapper, UserBackpac
                 .eq(UserBackpack::getStatus, TF.NO.getStatus())
                 .set(UserBackpack::getStatus, TF.YES.getStatus())
                 .update();
+    }
+
+    public List<UserBackpack> getByItemIds(Long uid, List<Integer> itemIds) {
+        return lambdaQuery()
+                .eq(UserBackpack::getUid, uid)
+                .eq(UserBackpack::getStatus, TF.NO.getStatus())
+                .in(UserBackpack::getItemId, itemIds)
+                .list();
     }
 }

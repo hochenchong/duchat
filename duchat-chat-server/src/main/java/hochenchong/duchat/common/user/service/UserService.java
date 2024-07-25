@@ -1,7 +1,10 @@
 package hochenchong.duchat.common.user.service;
 
 import hochenchong.duchat.common.user.domain.entity.User;
+import hochenchong.duchat.common.user.domain.vo.resp.BadgeResp;
 import hochenchong.duchat.common.user.domain.vo.resp.UserInfoResp;
+
+import java.util.List;
 
 /**
  * <p>
@@ -32,4 +35,20 @@ public interface UserService {
      * @param nickname 用户名
      */
     void modifyNickname(Long uid, String nickname);
+
+    /**
+     * 用户徽章列表
+     *
+     * @param uid 用户 id
+     * @return 用户徽章列表
+     */
+    List<BadgeResp> badges(Long uid);
+
+    /**
+     * 用户佩戴徽章
+     *
+     * @param uid 用户 id
+     * @param badgeId 要佩戴的徽章
+     */
+    void wearingBadge(Long uid, int badgeId);
 }

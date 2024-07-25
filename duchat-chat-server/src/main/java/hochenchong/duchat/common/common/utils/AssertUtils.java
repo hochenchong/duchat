@@ -36,6 +36,32 @@ public class AssertUtils {
         }
     }
 
+    /**
+     * 两个对象必须相同
+     *
+     * @param o1 对象1
+     * @param o2 对象2
+     * @param errorEnum 错误信息
+     */
+    public static void equal(Object o1, Object o2, ErrorEnum errorEnum) {
+        if (!ObjectUtil.equal(o1, o2)) {
+            throwException(errorEnum);
+        }
+    }
+
+    /**
+     * 两个对象必须不相同
+     *
+     * @param o1 对象1
+     * @param o2 对象2
+     * @param errorEnum 错误信息
+     */
+    public static void notEqual(Object o1, Object o2, ErrorEnum errorEnum) {
+        if (ObjectUtil.equal(o1, o2)) {
+            throwException(errorEnum);
+        }
+    }
+
     private static boolean isEmpty(Object obj) {
         return ObjectUtil.isEmpty(obj);
     }

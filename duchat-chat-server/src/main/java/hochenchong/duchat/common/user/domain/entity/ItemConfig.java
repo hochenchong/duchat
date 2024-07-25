@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -25,23 +26,24 @@ import java.time.LocalDateTime;
 @Schema(name = "ItemConfig 对象", description = "道具配置表")
 public class ItemConfig implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Schema(description = "id")
     @TableId("id")
-    private Integer id;
+    private int id;
 
     @Schema(description = "道具类型 1改名卡 2徽章")
     @TableField("type")
-    private Integer type;
+    private int type;
 
     @Schema(description = "道具图片")
     @TableField("img")
     private String img;
 
     @Schema(description = "道具功能描述")
-    @TableField("describe")
-    private String describe;
+    @TableField("item_desc")
+    private String itemDesc;
 
     @Schema(description = "创建时间")
     @TableField(value = "create_time", fill = FieldFill.INSERT)
