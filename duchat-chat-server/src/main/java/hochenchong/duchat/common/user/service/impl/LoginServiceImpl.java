@@ -35,7 +35,7 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public User userLogin(String name, String password) {
-        User user = userDao.getByName(name);
+        User user = userDao.getByNickname(name);
         if (user == null) {
             return null;
         }

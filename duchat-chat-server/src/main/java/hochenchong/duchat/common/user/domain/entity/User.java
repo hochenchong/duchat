@@ -22,7 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("t_user")
-@Schema(name = "User对象", description = "用户表")
+@Schema(name = "User 对象", description = "用户表")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,9 +31,13 @@ public class User implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @Schema(description = "用户昵称")
+    @Schema(description = "用户名")
     @TableField("name")
     private String name;
+
+    @Schema(description = "用户昵称")
+    @TableField("nickname")
+    private String nickname;
 
     @Schema(description = "用户密码")
     @TableField("password")

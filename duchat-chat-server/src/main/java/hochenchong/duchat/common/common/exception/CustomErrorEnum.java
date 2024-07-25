@@ -10,6 +10,8 @@ import lombok.Getter;
 @Getter
 public enum CustomErrorEnum implements ErrorEnum {
     PARAM_INVALID(400_000_001, "参数校验失败"),
+    NAME_ALREADY_EXISTS(400_000_002, "名字已存在"),
+    MODIFY_NAME_ITEM_NOT_ENOUGH(400_000_003, "改名卡道具不足"),
     ;
 
     private final Integer code;

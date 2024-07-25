@@ -1,5 +1,6 @@
 package hochenchong.duchat.common.common.interceptor;
 
+import hochenchong.duchat.common.common.constant.CommonConstants;
 import hochenchong.duchat.common.common.exception.HttpErrorEnum;
 import hochenchong.duchat.common.user.service.LoginService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,7 +35,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         // 如果为空，则代表无效类
         if (Objects.isNull(validUid)) {
             // 判断是否是一定要登录的网站
-            boolean isPublicURI = isPublicURI(request);
+            boolean isPublicURI = isPublicURI(request.getRequestURI());
             if (isPublicURI) {
                 return true;
             }
@@ -42,12 +43,13 @@ public class TokenInterceptor implements HandlerInterceptor {
             HttpErrorEnum.ACCESS_DENIED.sendHttpError(response);
             return false;
         }
-        request.setAttribute("uid", validUid);
+        request.setAttribute(CommonConstants.UID, validUid);
         return true;
     }
 
-    private boolean isPublicURI(HttpServletRequest request) {
-        return false;
+    private boolean isPublicURI(String requestURI) {
+        String[] split = requestURI.split("/");
+        return split.length > 3 && "public".equals(split[3]);
     }
 
     /**
