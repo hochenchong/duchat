@@ -9,7 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum CustomErrorEnum implements ErrorEnum {
-
+    PARAM_INVALID(400_000_001, "参数校验失败"),
     ;
 
     private final Integer code;
