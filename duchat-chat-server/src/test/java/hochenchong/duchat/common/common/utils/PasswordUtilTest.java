@@ -1,5 +1,6 @@
 package hochenchong.duchat.common.common.utils;
 
+import hochenchong.duchat.common.utils.PasswordUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package hochenchong.duchat.common.common.utils;
+package hochenchong.duchat.common.utils;
 
 public class PasswordUtil {
 

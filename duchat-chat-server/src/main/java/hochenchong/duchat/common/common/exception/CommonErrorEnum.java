@@ -11,6 +11,7 @@ import lombok.Getter;
 public enum CommonErrorEnum implements ErrorEnum {
     SUCCESS(0, "成功"),
     SYSTEM_ERROR(-1, "系统错误"),
+    REQUEST_BUSY(-2, "请求太频繁了，请稍后再试！"),
     ;
 
     private final Integer code;

@@ -4,7 +4,9 @@ import hochenchong.duchat.common.common.config.ThreadPoolConfig;
 import hochenchong.duchat.common.common.utils.JwtUtils;
 import hochenchong.duchat.common.user.dao.UserDao;
 import hochenchong.duchat.common.user.domain.entity.User;
+import hochenchong.duchat.common.user.domain.enums.IdempotentEnum;
 import hochenchong.duchat.common.user.service.LoginService;
+import hochenchong.duchat.common.user.service.UserBackpackService;
 import hochenchong.duchat.common.utils.RedisUtils;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
@@ -81,5 +83,16 @@ public class DaoTest {
             }
         });
         Thread.sleep(200);
+    }
+
+    @Autowired
+    private UserBackpackService userBackpackService;
+
+    /**
+     * 测试发道具
+     */
+    @Test
+    public void testAcquireItem() {
+        userBackpackService.acquireItem(1L, 2, IdempotentEnum.UID, "1");
     }
 }

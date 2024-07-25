@@ -2,7 +2,7 @@ package hochenchong.duchat.common.user.service.impl;
 
 import hochenchong.duchat.common.common.constant.RedisKey;
 import hochenchong.duchat.common.common.utils.JwtUtils;
-import hochenchong.duchat.common.common.utils.PasswordUtil;
+import hochenchong.duchat.common.utils.PasswordUtil;
 import hochenchong.duchat.common.user.dao.UserDao;
 import hochenchong.duchat.common.user.domain.entity.User;
 import hochenchong.duchat.common.user.service.LoginService;
