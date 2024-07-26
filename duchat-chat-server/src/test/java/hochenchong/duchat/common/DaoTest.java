@@ -1,6 +1,7 @@
 package hochenchong.duchat.common;
 
 import hochenchong.duchat.common.common.config.ThreadPoolConfig;
+import hochenchong.duchat.common.common.event.UserRegisterEvent;
 import hochenchong.duchat.common.common.utils.JwtUtils;
 import hochenchong.duchat.common.user.dao.UserDao;
 import hochenchong.duchat.common.user.domain.entity.User;
@@ -15,6 +16,7 @@ import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 @SpringBootTest
@@ -94,5 +96,16 @@ public class DaoTest {
     @Test
     public void testAcquireItem() {
         userBackpackService.acquireItem(1L, 2, IdempotentEnum.UID, "1");
+    }
+
+    // 测试 Spring 事件发放
+    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
+
+    @Test
+    public void testEvent() throws InterruptedException {
+        applicationEventPublisher.publishEvent(new UserRegisterEvent(this, userDao.getById(1L)));
+
+        Thread.sleep(5000);
     }
 }

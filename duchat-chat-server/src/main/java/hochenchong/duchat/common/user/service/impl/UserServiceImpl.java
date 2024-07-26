@@ -1,5 +1,6 @@
 package hochenchong.duchat.common.user.service.impl;
 
+import hochenchong.duchat.common.common.event.UserRegisterEvent;
 import hochenchong.duchat.common.common.exception.CustomErrorEnum;
 import hochenchong.duchat.common.common.utils.AssertUtils;
 import hochenchong.duchat.common.user.dao.UserBackpackDao;
@@ -15,6 +16,7 @@ import hochenchong.duchat.common.user.service.UserService;
 import hochenchong.duchat.common.user.service.adapter.UserAdapter;
 import hochenchong.duchat.common.user.service.cache.ItemCache;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,10 +37,14 @@ public class UserServiceImpl implements UserService {
     private UserBackpackDao userBackpackDao;
     @Autowired
     private ItemCache itemCache;
+    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
 
     @Override
     public Long register(User user) {
         userDao.save(user);
+        // 用户注册事件
+        applicationEventPublisher.publishEvent(new UserRegisterEvent(this, user));
         return user.getId();
     }
 

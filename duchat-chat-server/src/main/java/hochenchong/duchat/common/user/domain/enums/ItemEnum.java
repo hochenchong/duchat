@@ -17,13 +17,15 @@ import java.util.stream.Collectors;
 @Getter
 public enum ItemEnum {
     MODIFY_NAME_CARD(1, ItemTypeEnum.MODIFY_NAME_CARD, "改名卡"),
+    LIKE_BADGE(2, ItemTypeEnum.BADGE, "点赞达人"),
+    REG_TOP100_BADGE(3, ItemTypeEnum.BADGE, "前 100 注册用户专属徽章"),
     ;
 
     private final Integer id;
     private final ItemTypeEnum typeEnum;
     private final String desc;
 
-    private static Map<Integer, ItemEnum> cache;
+    private static final Map<Integer, ItemEnum> cache;
 
     static {
         cache = Arrays.stream(ItemEnum.values()).collect(Collectors.toMap(ItemEnum::getId, Function.identity()));
