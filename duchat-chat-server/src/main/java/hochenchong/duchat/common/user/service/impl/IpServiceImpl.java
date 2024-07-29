@@ -68,17 +68,14 @@ public class IpServiceImpl implements IpService, DisposableBean {
 
     private static IpDetail tryGetIpDetailOrNullThreeTimes(String ip) {
         // 优先从本地查询
-        try {
-            IpDetail ipDetail = Ip2regionUtils.getIpDetailByIp(ip);
-            if (ipDetail != null) {
-                return ipDetail;
-            }
-        } catch (Exception ignored) {
+        IpDetail ipDetail = Ip2regionUtils.getIpDetailByIp(ip);
+        if (ipDetail != null) {
+            return ipDetail;
         }
 
         // 查询不到则调用淘宝接口查询
         for (int i = 0; i < 3; i++) {
-            IpDetail ipDetail = getIpDetailOrNull(ip);
+            ipDetail = getIpDetailOrNull(ip);
             if (Objects.nonNull(ipDetail)) {
                 return ipDetail;
             }
