@@ -34,9 +34,10 @@ public class UserRegisterListener {
     }
 
     // 可以使用异步的方式，如果发放事件在事务中，还可以选择在事务的什么阶段执行，默认在事务提交后执行
+    // fallbackExecution 如果没事务是否运行，默认是 false，这里需要设置为 true
     @Async
     // @EventListener(classes = UserRegisterListener.class)
-    @TransactionalEventListener(classes = UserRegisterEvent.class, phase = TransactionPhase.AFTER_COMMIT)
+    @TransactionalEventListener(classes = UserRegisterEvent.class, phase = TransactionPhase.AFTER_COMMIT, fallbackExecution = true)
     public void sendBadge(UserRegisterEvent event) {
         User user = event.getUser();
         // 前 100 名注册有徽章

@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +24,8 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@TableName("t_user")
+// autoResultMap = true 才会自动将 ip 信息映射为对象
+@TableName(value = "t_user", autoResultMap = true)
 @Schema(name = "User 对象", description = "用户表")
 public class User implements Serializable {
 
@@ -66,8 +69,8 @@ public class User implements Serializable {
     private LocalDateTime lastOptTime;
 
     @Schema(description = "ip信息")
-    @TableField("ip_info")
-    private String ipInfo;
+    @TableField(value = "ip_info", typeHandler = JacksonTypeHandler.class)
+    private IpInfo ipInfo;
 
     @Schema(description = "佩戴的徽章id")
     @TableField("item_id")
@@ -84,4 +87,11 @@ public class User implements Serializable {
     @Schema(description = "修改时间")
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
+
+    public void refreshIp(String ip) {
+        if (ipInfo == null) {
+            ipInfo = new IpInfo();
+        }
+        ipInfo.refreshIp(ip);
+    }
 }
