@@ -1,6 +1,7 @@
 package hochenchong.duchat.common.user.service;
 
 import hochenchong.duchat.common.websocket.domain.vo.req.WSBaseReq;
+import hochenchong.duchat.common.websocket.domain.vo.resp.WSBaseResp;
 import io.netty.channel.Channel;
 
 /**
@@ -38,4 +39,6 @@ public interface WebSocketService {
     void remove(Channel channel);
 
     void authorize(Channel channel, String token);
+
+    void sendMsgToAll(WSBaseResp<?> msg);
 }

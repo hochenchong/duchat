@@ -1,5 +1,6 @@
 package hochenchong.duchat.common.user.dao;
 
+import hochenchong.duchat.common.common.domain.enums.TF;
 import hochenchong.duchat.common.user.domain.entity.User;
 import hochenchong.duchat.common.user.mapper.UserMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -54,5 +55,16 @@ public class UserDao extends ServiceImpl<UserMapper, User> {
      */
     public void wearingBadge(Long uid, int itemId) {
         lambdaUpdate().eq(User::getId, uid).set(User::getItemId, itemId).update();
+    }
+
+    /**
+     * 拉黑用户
+     *
+     * @param uid 用户 id
+     */
+    public void invalidUid(Long uid) {
+        lambdaUpdate().eq(User::getId, uid)
+                .set(User::getStatus, TF.YES.getStatus())
+                .update();
     }
 }

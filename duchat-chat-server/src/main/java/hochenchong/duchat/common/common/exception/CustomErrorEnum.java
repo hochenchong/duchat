@@ -14,6 +14,7 @@ public enum CustomErrorEnum implements ErrorEnum {
     MODIFY_NAME_ITEM_NOT_ENOUGH(400_000_003, "改名卡道具不足"),
     BADGE_ITEM_NOT_OWN(400_000_004, "还未拥有该徽章"),
     ITEM_TYPE_ERROR(400_000_005, "道具类型错误"),
+    NO_PERMISSION(400_000_006, "没有权限"),
     ;
 
     private final Integer code;

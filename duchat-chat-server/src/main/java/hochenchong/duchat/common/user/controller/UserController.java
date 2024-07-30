@@ -1,11 +1,16 @@
 package hochenchong.duchat.common.user.controller;
 
 import hochenchong.duchat.common.common.domain.vo.response.ApiResult;
+import hochenchong.duchat.common.common.exception.CustomErrorEnum;
+import hochenchong.duchat.common.common.utils.AssertUtils;
 import hochenchong.duchat.common.common.utils.RequestHolder;
+import hochenchong.duchat.common.user.domain.enums.RoleEnum;
+import hochenchong.duchat.common.user.domain.vo.req.BlackReq;
 import hochenchong.duchat.common.user.domain.vo.req.ModifyNameReq;
 import hochenchong.duchat.common.user.domain.vo.req.WearingBadgeReq;
 import hochenchong.duchat.common.user.domain.vo.resp.BadgeResp;
 import hochenchong.duchat.common.user.domain.vo.resp.UserInfoResp;
+import hochenchong.duchat.common.user.service.RoleService;
 import hochenchong.duchat.common.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,6 +35,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private RoleService roleService;
 
     @GetMapping("/userInfo")
     @Operation(summary = "用户详情")
@@ -54,6 +61,17 @@ public class UserController {
     @Operation(summary = "佩戴徽章")
     public ApiResult<Void> wearingBadge(@Valid @RequestBody WearingBadgeReq req) {
         userService.wearingBadge(RequestHolder.get().getUid(), req.getBadgeId());
+        return ApiResult.success();
+    }
+
+    @PutMapping("/black")
+    @Operation(summary = "拉黑用户")
+    public ApiResult<Void> black(@Valid @RequestBody BlackReq req) {
+        // 先判断是否有权限
+        boolean hasPower = roleService.hasPower(RequestHolder.get().getUid(), RoleEnum.CHAT_MANAGER);
+        AssertUtils.isTrue(hasPower, CustomErrorEnum.NO_PERMISSION);
+        // 拉黑用户
+        userService.black(req);
         return ApiResult.success();
     }
 }

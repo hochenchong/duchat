@@ -1,8 +1,10 @@
 package hochenchong.duchat.common.user.service.adapter;
 
+import hochenchong.duchat.common.common.domain.enums.TF;
 import hochenchong.duchat.common.user.domain.entity.User;
 import hochenchong.duchat.common.websocket.domain.enums.WSRespTypeEnum;
 import hochenchong.duchat.common.websocket.domain.vo.resp.WSBaseResp;
+import hochenchong.duchat.common.websocket.domain.vo.resp.WSBlack;
 import hochenchong.duchat.common.websocket.domain.vo.resp.WSLoginSuccess;
 import hochenchong.duchat.common.websocket.domain.vo.resp.WSLoginUrl;
 import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
@@ -34,7 +36,7 @@ public class WebSocketAdapter {
         return resp;
     }
 
-    public static WSBaseResp<?> buildLoginSuccessResp(User user, String token) {
+    public static WSBaseResp<?> buildLoginSuccessResp(User user, String token, boolean power) {
         WSBaseResp<WSLoginSuccess> wsBaseResp = new WSBaseResp<>();
         wsBaseResp.setType(WSRespTypeEnum.LOGIN_SUCCESS.getType());
         WSLoginSuccess wsLoginSuccess = WSLoginSuccess.builder()
@@ -42,8 +44,16 @@ public class WebSocketAdapter {
                 .name(user.getName())
                 .token(token)
                 .uid(user.getId())
+                .power(power ? TF.YES.getStatus() : TF.NO.getStatus())
                 .build();
         wsBaseResp.setData(wsLoginSuccess);
+        return wsBaseResp;
+    }
+
+    public static WSBaseResp<?> buildBlack(User user) {
+        WSBaseResp<WSBlack> wsBaseResp = new WSBaseResp<>();
+        wsBaseResp.setType(WSRespTypeEnum.BLACK.getType());
+        wsBaseResp.setData(WSBlack.builder().uid(user.getId()).build());
         return wsBaseResp;
     }
 }

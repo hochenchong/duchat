@@ -62,6 +62,30 @@ public class AssertUtils {
         }
     }
 
+    /**
+     * 断言为 true
+     *
+     * @param expression 判断
+     * @param errorEnum 错误信息
+     */
+    public static void isTrue(boolean expression, ErrorEnum errorEnum) {
+        if (!expression) {
+            throwException(errorEnum);
+        }
+    }
+
+    /**
+     * 断言为 false
+     *
+     * @param expression 判断
+     * @param errorEnum 错误信息
+     */
+    public static void isFalse(boolean expression, ErrorEnum errorEnum) {
+        if (expression) {
+            throwException(errorEnum);
+        }
+    }
+
     private static boolean isEmpty(Object obj) {
         return ObjectUtil.isEmpty(obj);
     }

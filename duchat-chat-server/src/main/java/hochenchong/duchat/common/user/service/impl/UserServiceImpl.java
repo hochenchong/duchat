@@ -1,26 +1,35 @@
 package hochenchong.duchat.common.user.service.impl;
 
+import hochenchong.duchat.common.common.event.UserBlackEvent;
 import hochenchong.duchat.common.common.event.UserRegisterEvent;
 import hochenchong.duchat.common.common.exception.CustomErrorEnum;
 import hochenchong.duchat.common.common.utils.AssertUtils;
+import hochenchong.duchat.common.user.dao.BlackDao;
 import hochenchong.duchat.common.user.dao.UserBackpackDao;
 import hochenchong.duchat.common.user.dao.UserDao;
+import hochenchong.duchat.common.user.domain.entity.Black;
 import hochenchong.duchat.common.user.domain.entity.ItemConfig;
 import hochenchong.duchat.common.user.domain.entity.User;
 import hochenchong.duchat.common.user.domain.entity.UserBackpack;
+import hochenchong.duchat.common.user.domain.enums.BlackTypeEnum;
 import hochenchong.duchat.common.user.domain.enums.ItemEnum;
 import hochenchong.duchat.common.user.domain.enums.ItemTypeEnum;
+import hochenchong.duchat.common.user.domain.vo.req.BlackReq;
 import hochenchong.duchat.common.user.domain.vo.resp.BadgeResp;
 import hochenchong.duchat.common.user.domain.vo.resp.UserInfoResp;
 import hochenchong.duchat.common.user.service.UserService;
 import hochenchong.duchat.common.user.service.adapter.UserAdapter;
 import hochenchong.duchat.common.user.service.cache.ItemCache;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
+
+import static net.sf.jsqlparser.util.validation.metadata.NamedObject.user;
 
 
 /**
@@ -35,6 +44,8 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
     @Autowired
     private UserBackpackDao userBackpackDao;
+    @Autowired
+    private BlackDao blackDao;
     @Autowired
     private ItemCache itemCache;
     @Autowired
@@ -88,5 +99,41 @@ public class UserServiceImpl implements UserService {
         AssertUtils.equal(itemConfig.getType(), ItemTypeEnum.BADGE.getType(), CustomErrorEnum.ITEM_TYPE_ERROR);
         // 佩戴徽章
         userDao.wearingBadge(uid, badgeId);
+    }
+
+    @Override
+    public void black(BlackReq req) {
+        Long uid = req.getUid();
+        Black black = new Black();
+        black.setType(BlackTypeEnum.UID.getType());
+        black.setTarget(uid.toString());
+        blackDao.save(black);
+        // 拉黑该用户的 IP 地址
+        User user = userDao.getById(uid);
+        blackIp(user);
+        // 发送拉黑事件
+        applicationEventPublisher.publishEvent(new UserBlackEvent(this, user));
+    }
+
+    private void blackIp(User user) {
+        if (user.getIpInfo() == null) {
+            return;
+        }
+        String createIp = user.getIpInfo().getCreateIp();
+        String updateIp = user.getIpInfo().getUpdateIp();
+        blackIp(createIp);
+        if (!Objects.equals(createIp, updateIp)) {
+            blackIp(updateIp);
+        }
+    }
+
+    private void blackIp(String ip) {
+        if (StringUtils.isEmpty(ip)) {
+            return;
+        }
+        Black black = new Black();
+        black.setType(BlackTypeEnum.IP.getType());
+        black.setTarget(ip);
+        blackDao.save(black);
     }
 }

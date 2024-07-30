@@ -1,6 +1,7 @@
 package hochenchong.duchat.common.user.service;
 
 import hochenchong.duchat.common.user.domain.entity.User;
+import hochenchong.duchat.common.user.domain.vo.req.BlackReq;
 import hochenchong.duchat.common.user.domain.vo.resp.BadgeResp;
 import hochenchong.duchat.common.user.domain.vo.resp.UserInfoResp;
 
@@ -51,4 +52,11 @@ public interface UserService {
      * @param badgeId 要佩戴的徽章
      */
     void wearingBadge(Long uid, int badgeId);
+
+    /**
+     * 拉黑用户
+     *
+     * @param req 被拉黑用户的信息
+     */
+    void black(BlackReq req);
 }
