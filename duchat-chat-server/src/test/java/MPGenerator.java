@@ -23,7 +23,8 @@ public class MPGenerator {
         FastAutoGenerator.create(URL, "root", "mysql8.0")
                 .globalConfig(builder -> {
                     builder.author("hochenchong") // 设置作者
-                            .enableSwagger() // 开启 swagger 模式
+                            // .enableSwagger() // swagger 1，2 使用这个
+                            .enableSpringdoc() // swagger 3 使用这个
                             .outputDir(System.getProperty("user.dir") + "/duchat-chat-server/src/test/java") // 指定输出目录
                     ;
                 })
