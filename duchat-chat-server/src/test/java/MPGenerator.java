@@ -53,7 +53,9 @@ public class MPGenerator {
                     // include 与 exclude 只能配置一项 ，支持正则匹配、例如 ^t_.* 所有 t_ 开头的表名
                     builder.addInclude("^t_.*") // 设置需要生成的表名
                             .addTablePrefix("t_") // 设置过滤表前缀
-                            .serviceBuilder()
+                            // 设置 service 的模板，已经 service 的名称规则
+                            .serviceBuilder().serviceTemplate("/templates/service.java").convertServiceFileName((entityName) -> entityName + "Service")
+                            .serviceImplTemplate("/templates/serviceImpl.java")
                             .enableFileOverride() // 覆盖已生成文件
                             .formatServiceImplFileName("%sDao")
                             // 设置实体类信息
