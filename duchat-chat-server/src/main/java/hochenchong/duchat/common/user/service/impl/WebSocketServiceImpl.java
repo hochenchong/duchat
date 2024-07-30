@@ -6,6 +6,7 @@ import cn.hutool.json.JSONUtil;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import hochenchong.duchat.common.common.config.ThreadPoolConfig;
+import hochenchong.duchat.common.common.domain.enums.TF;
 import hochenchong.duchat.common.common.event.UserOnlineEvent;
 import hochenchong.duchat.common.user.dao.UserDao;
 import hochenchong.duchat.common.user.domain.entity.User;
@@ -101,6 +102,10 @@ public class WebSocketServiceImpl implements WebSocketService {
         user = loginService.userLogin(user.getName(), user.getPassword());
         if (user == null) {
             sendMsg(channel, WebSocketAdapter.buildResp(WSRespTypeEnum.LOGIN_ERROR, "用户名或密码不正确！"));
+            return;
+        }
+        if (user.getStatus() == TF.YES.getStatus()) {
+            sendMsg(channel, WebSocketAdapter.buildResp(WSRespTypeEnum.LOGIN_ERROR, "用户已被禁止使用！"));
             return;
         }
         // 成功登录，则获取 token

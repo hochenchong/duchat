@@ -5,6 +5,7 @@ import hochenchong.duchat.common.user.dao.UserDao;
 import hochenchong.duchat.common.user.domain.entity.User;
 import hochenchong.duchat.common.user.service.WebSocketService;
 import hochenchong.duchat.common.user.service.adapter.WebSocketAdapter;
+import hochenchong.duchat.common.user.service.cache.UserCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,8 @@ public class UserBlackListener {
     private WebSocketService webSocketService;
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private UserCache userCache;
 
     @Async
     @TransactionalEventListener(classes = UserBlackEvent.class, phase = TransactionPhase.AFTER_COMMIT, fallbackExecution = true)
@@ -35,5 +38,11 @@ public class UserBlackListener {
     @TransactionalEventListener(classes = UserBlackEvent.class, phase = TransactionPhase.AFTER_COMMIT, fallbackExecution = true)
     public void changeUserStatus(UserBlackEvent event) {
         userDao.invalidUid(event.getUser().getId());
+    }
+
+    @Async
+    @TransactionalEventListener(classes = UserBlackEvent.class, phase = TransactionPhase.AFTER_COMMIT, fallbackExecution = true)
+    public void evictCache(UserBlackEvent event) {
+        userCache.evictBlackMap();
     }
 }

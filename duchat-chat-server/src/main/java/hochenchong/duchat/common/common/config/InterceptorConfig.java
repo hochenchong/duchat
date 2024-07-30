@@ -1,5 +1,6 @@
 package hochenchong.duchat.common.common.config;
 
+import hochenchong.duchat.common.common.interceptor.BlackInterceptor;
 import hochenchong.duchat.common.common.interceptor.CollectorInterceptor;
 import hochenchong.duchat.common.common.interceptor.TokenInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
     private TokenInterceptor tokenInterceptor;
     @Autowired
     private CollectorInterceptor collectorInterceptor;
+    @Autowired
+    private BlackInterceptor blackInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -27,6 +30,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(tokenInterceptor)
                 .addPathPatterns("/capi/**");
         registry.addInterceptor(collectorInterceptor)
+                .addPathPatterns("/capi/**");
+        registry.addInterceptor(blackInterceptor)
                 .addPathPatterns("/capi/**");
     }
 }
