@@ -4,8 +4,8 @@ import hochenchong.duchat.common.common.domain.enums.TF;
 import hochenchong.duchat.common.user.domain.entity.ItemConfig;
 import hochenchong.duchat.common.user.domain.entity.User;
 import hochenchong.duchat.common.user.domain.entity.UserBackpack;
-import hochenchong.duchat.common.user.domain.vo.resp.BadgeResp;
-import hochenchong.duchat.common.user.domain.vo.resp.UserInfoResp;
+import hochenchong.duchat.common.user.domain.vo.resp.user.BadgeResp;
+import hochenchong.duchat.common.user.domain.vo.resp.user.UserInfoResp;
 import org.springframework.beans.BeanUtils;
 
 import java.util.Comparator;

@@ -14,9 +14,9 @@ import hochenchong.duchat.common.user.domain.entity.UserBackpack;
 import hochenchong.duchat.common.user.domain.enums.BlackTypeEnum;
 import hochenchong.duchat.common.user.domain.enums.ItemEnum;
 import hochenchong.duchat.common.user.domain.enums.ItemTypeEnum;
-import hochenchong.duchat.common.user.domain.vo.req.BlackReq;
-import hochenchong.duchat.common.user.domain.vo.resp.BadgeResp;
-import hochenchong.duchat.common.user.domain.vo.resp.UserInfoResp;
+import hochenchong.duchat.common.user.domain.vo.req.user.BlackReq;
+import hochenchong.duchat.common.user.domain.vo.resp.user.BadgeResp;
+import hochenchong.duchat.common.user.domain.vo.resp.user.UserInfoResp;
 import hochenchong.duchat.common.user.service.UserService;
 import hochenchong.duchat.common.user.service.adapter.UserAdapter;
 import hochenchong.duchat.common.user.service.cache.ItemCache;
@@ -28,8 +28,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
-
-import static net.sf.jsqlparser.util.validation.metadata.NamedObject.user;
 
 
 /**

@@ -48,6 +48,7 @@ public class MPGenerator {
                     ;
                 })
                 // 策略配置
+                // 模板配置参考：https://baomidou.com/reference/new-code-generator-configuration/#%E6%A8%A1%E6%9D%BF%E9%85%8D%E7%BD%AE-templateconfig
                 .strategyConfig(builder -> {
                     // TODO 这里修改需要自动生成的表名，按 , 隔开
                     // include 与 exclude 只能配置一项 ，支持正则匹配、例如 ^t_.* 所有 t_ 开头的表名

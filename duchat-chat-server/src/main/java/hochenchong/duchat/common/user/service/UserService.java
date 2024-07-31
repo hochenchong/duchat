@@ -1,9 +1,9 @@
 package hochenchong.duchat.common.user.service;
 
 import hochenchong.duchat.common.user.domain.entity.User;
-import hochenchong.duchat.common.user.domain.vo.req.BlackReq;
-import hochenchong.duchat.common.user.domain.vo.resp.BadgeResp;
-import hochenchong.duchat.common.user.domain.vo.resp.UserInfoResp;
+import hochenchong.duchat.common.user.domain.vo.req.user.BlackReq;
+import hochenchong.duchat.common.user.domain.vo.resp.user.BadgeResp;
+import hochenchong.duchat.common.user.domain.vo.resp.user.UserInfoResp;
 
 import java.util.List;
 
