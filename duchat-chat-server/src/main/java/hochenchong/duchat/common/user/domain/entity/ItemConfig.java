@@ -31,11 +31,11 @@ public class ItemConfig implements Serializable {
 
     @Schema(description = "id")
     @TableId("id")
-    private int id;
+    private Integer id;
 
     @Schema(description = "道具类型 1改名卡 2徽章")
     @TableField("type")
-    private int type;
+    private Integer type;
 
     @Schema(description = "道具图片")
     @TableField("img")

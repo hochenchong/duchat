@@ -17,9 +17,7 @@
 * [hutool](https://github.com/dromara/hutool)：一个功能丰富且易用的 Java 工具库。除了提供 java 命名空间的，还有提供 Jakarta 的，便于新版本 Java（如 Java 17）使用
 * [ip2region](https://github.com/lionsoul2014/ip2region)：一个离线 IP 地址定位库和 IP 定位数据管理框架，10 微秒级别的查询效率
 
-
 ### 待办事项
-* 联系人模块：游标获取好友列表，联系人模块还未测试
 * 单聊
 * 群聊
 * 屏蔽字

@@ -66,7 +66,7 @@ public class FriendController {
 
     @GetMapping("/apply/page")
     @Operation(summary = "好友申请列表")
-    public ApiResult<PageBaseResp<FriendApplyResp>> page(@Valid PageBaseReq request) {
+    public ApiResult<PageBaseResp<FriendApplyResp>> page(@Valid @RequestBody PageBaseReq request) {
         Long uid = RequestHolder.get().getUid();
         return ApiResult.success(friendService.pageApplyFriend(uid, request));
     }
@@ -80,7 +80,7 @@ public class FriendController {
 
     @GetMapping("/page")
     @Operation(summary = "联系人列表")
-    public ApiResult<CursorPageBaseResp<FriendResp>> friendList(@Valid CursorPageBaseReq request) {
+    public ApiResult<CursorPageBaseResp<FriendResp>> friendList(@Valid @RequestBody CursorPageBaseReq request) {
         Long uid = RequestHolder.get().getUid();
         return ApiResult.success(friendService.friendList(uid, request));
     }

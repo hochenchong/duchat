@@ -57,10 +57,10 @@ public class FriendServiceImpl implements FriendService {
     @Override
     public void apply(Long uid, FriendApplyReq req) {
         // 不能加自己
-        AssertUtils.isTrue(Objects.equals(uid, req.getUid()), CustomErrorEnum.NOT_ADD_SELF);
+        AssertUtils.isFalse(Objects.equals(uid, req.getUid()), CustomErrorEnum.NOT_ADD_SELF);
         // 判断是否已经是好友
         UserFriend userFriend = userFriendDao.getByFriend(uid, req.getUid());
-        AssertUtils.isNotEmpty(userFriend, CustomErrorEnum.ALREADY_FRIENDS);
+        AssertUtils.isEmpty(userFriend, CustomErrorEnum.ALREADY_FRIENDS);
         // 判断已经自己有待审批的申请记录，已经存在则直接返回
         UserApply userApply = userApplyDao.getFriendApply(uid, req.getUid());
         if (Objects.nonNull(userApply)) {
@@ -141,8 +141,12 @@ public class FriendServiceImpl implements FriendService {
 
     @Override
     public CursorPageBaseResp<FriendResp> friendList(Long uid, CursorPageBaseReq request) {
-        // TODO
-        return null;
+        CursorPageBaseResp<UserFriend> friendPage = userFriendDao.getFriendPage(uid, request);
+        if (CollectionUtils.isEmpty(friendPage.getList())) {
+            return CursorPageBaseResp.empty();
+        }
+        List<FriendResp> list = friendPage.getList().stream().map(f -> FriendResp.builder().uid(f.getFriendUid()).build()).toList();
+        return CursorPageBaseResp.init(friendPage, list);
     }
 
     private void createFriend(Long uid, Long targetUid) {

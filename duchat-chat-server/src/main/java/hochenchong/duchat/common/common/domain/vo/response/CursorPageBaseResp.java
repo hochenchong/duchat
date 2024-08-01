@@ -25,7 +25,7 @@ public class CursorPageBaseResp<T> {
     @Schema(description = "数据列表")
     private List<T> list;
 
-    public static <T> CursorPageBaseResp<T> init(CursorPageBaseResp<T> cursorPage, List<T> list) {
+    public static <T> CursorPageBaseResp<T> init(CursorPageBaseResp cursorPage, List<T> list) {
         CursorPageBaseResp<T> cursorPageBaseResp = new CursorPageBaseResp<T>();
         cursorPageBaseResp.setLast(cursorPage.isLast());
         cursorPageBaseResp.setList(list);
