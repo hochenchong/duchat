@@ -1,8 +1,11 @@
 package hochenchong.duchat.common.user.service;
 
+import hochenchong.duchat.common.user.domain.dto.BadgeItemDTO;
+import hochenchong.duchat.common.user.domain.dto.SummeryInfoDTO;
 import hochenchong.duchat.common.user.domain.entity.User;
 import hochenchong.duchat.common.user.domain.vo.req.user.BlackReq;
 import hochenchong.duchat.common.user.domain.vo.resp.user.BadgeResp;
+import hochenchong.duchat.common.user.domain.vo.req.user.SummeryInfoReq;
 import hochenchong.duchat.common.user.domain.vo.resp.user.UserInfoResp;
 
 import java.util.List;
@@ -59,4 +62,19 @@ public interface UserService {
      * @param req 被拉黑用户的信息
      */
     void black(BlackReq req);
+
+    /**
+     * 批量获取用户信息
+     *
+     * @param req 请求的用户列表
+     * @return 用户信息
+     */
+    List<SummeryInfoDTO> getSummeryUserInfo(SummeryInfoReq req);
+
+    /**
+     * 获取所有徽章信息
+     *
+     * @return 所有徽章信息
+     */
+    List<BadgeItemDTO> getBadgeItemInfos();
 }

@@ -19,7 +19,7 @@ public class BadgeResp {
     private String img;
 
     @Schema(description = "徽章描述")
-    private String desc;
+    private String itemDesc;
 
     @Schema(description = "是否拥有 0否 1是")
     private int ownStatus;

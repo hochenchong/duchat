@@ -4,11 +4,14 @@ import hochenchong.duchat.common.common.domain.vo.response.ApiResult;
 import hochenchong.duchat.common.common.exception.CustomErrorEnum;
 import hochenchong.duchat.common.common.utils.AssertUtils;
 import hochenchong.duchat.common.common.utils.RequestHolder;
+import hochenchong.duchat.common.user.domain.dto.BadgeItemDTO;
+import hochenchong.duchat.common.user.domain.dto.SummeryInfoDTO;
 import hochenchong.duchat.common.user.domain.enums.RoleEnum;
 import hochenchong.duchat.common.user.domain.vo.req.user.BlackReq;
 import hochenchong.duchat.common.user.domain.vo.req.user.ModifyNameReq;
 import hochenchong.duchat.common.user.domain.vo.req.user.WearingBadgeReq;
 import hochenchong.duchat.common.user.domain.vo.resp.user.BadgeResp;
+import hochenchong.duchat.common.user.domain.vo.req.user.SummeryInfoReq;
 import hochenchong.duchat.common.user.domain.vo.resp.user.UserInfoResp;
 import hochenchong.duchat.common.user.service.RoleService;
 import hochenchong.duchat.common.user.service.UserService;
@@ -73,5 +76,17 @@ public class UserController {
         // 拉黑用户
         userService.black(req);
         return ApiResult.success();
+    }
+
+    @GetMapping("/public/userInfo/batch")
+    @Operation(summary = "批量查询用户信息")
+    public ApiResult<List<SummeryInfoDTO>> getSummeryUserInfo(@Valid @RequestBody SummeryInfoReq req) {
+        return ApiResult.success(userService.getSummeryUserInfo(req));
+    }
+
+    @GetMapping("/public/badges")
+    @Operation(summary = "所有徽章信息")
+    public ApiResult<List<BadgeItemDTO>> getBadgeItemInfos() {
+        return ApiResult.success(userService.getBadgeItemInfos());
     }
 }

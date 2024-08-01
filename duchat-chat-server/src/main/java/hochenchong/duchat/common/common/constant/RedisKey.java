@@ -10,6 +10,10 @@ public class RedisKey {
      * 用户 token 的 key
      */
     public static final String USER_TOKEN_STRING = "userToken:uid_%d";
+    /**
+     * 用户的信息汇总
+     */
+    public static final String USER_SUMMARY_STRING = "userSummary:uid_%d";
 
     public static String getKey(String key, Object... o) {
         return BASE_KEY + String.format(key, o);

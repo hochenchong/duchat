@@ -7,6 +7,8 @@ import hochenchong.duchat.common.common.utils.AssertUtils;
 import hochenchong.duchat.common.user.dao.BlackDao;
 import hochenchong.duchat.common.user.dao.UserBackpackDao;
 import hochenchong.duchat.common.user.dao.UserDao;
+import hochenchong.duchat.common.user.domain.dto.BadgeItemDTO;
+import hochenchong.duchat.common.user.domain.dto.SummeryInfoDTO;
 import hochenchong.duchat.common.user.domain.entity.Black;
 import hochenchong.duchat.common.user.domain.entity.ItemConfig;
 import hochenchong.duchat.common.user.domain.entity.User;
@@ -16,10 +18,13 @@ import hochenchong.duchat.common.user.domain.enums.ItemEnum;
 import hochenchong.duchat.common.user.domain.enums.ItemTypeEnum;
 import hochenchong.duchat.common.user.domain.vo.req.user.BlackReq;
 import hochenchong.duchat.common.user.domain.vo.resp.user.BadgeResp;
+import hochenchong.duchat.common.user.domain.vo.req.user.SummeryInfoReq;
 import hochenchong.duchat.common.user.domain.vo.resp.user.UserInfoResp;
 import hochenchong.duchat.common.user.service.UserService;
 import hochenchong.duchat.common.user.service.adapter.UserAdapter;
 import hochenchong.duchat.common.user.service.cache.ItemCache;
+import hochenchong.duchat.common.user.service.cache.UserCache;
+import hochenchong.duchat.common.user.service.cache.UserSummaryCache;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -27,6 +32,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 
@@ -45,7 +51,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BlackDao blackDao;
     @Autowired
+    private UserCache userCache;
+    @Autowired
     private ItemCache itemCache;
+    @Autowired
+    private UserSummaryCache userSummaryCache;
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
 
@@ -111,6 +121,21 @@ public class UserServiceImpl implements UserService {
         blackIp(user);
         // 发送拉黑事件
         applicationEventPublisher.publishEvent(new UserBlackEvent(this, user));
+    }
+
+    @Override
+    public List<SummeryInfoDTO> getSummeryUserInfo(SummeryInfoReq req) {
+        // 从缓存中批量获取用户信息
+        Map<Long, SummeryInfoDTO> batch = userSummaryCache.getBatch(req.getUidList());
+        return batch.values().stream().toList();
+    }
+
+    @Override
+    public List<BadgeItemDTO> getBadgeItemInfos() {
+        return itemCache.getByType(ItemTypeEnum.BADGE.getType()).stream().map(i -> BadgeItemDTO.builder()
+                .itemId(i.getId())
+                .img(i.getImg())
+                .itemDesc(i.getItemDesc()).build()).toList();
     }
 
     private void blackIp(User user) {
