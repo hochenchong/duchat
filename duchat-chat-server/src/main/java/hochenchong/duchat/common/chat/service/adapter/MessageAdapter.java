@@ -26,7 +26,7 @@ public class MessageAdapter {
         ChatMsgResp resp = new ChatMsgResp();
         BeanUtils.copyProperties(msg, resp);
         AbstractMsgHandler<?> msgHandler = MsgHandlerFactory.getStrategyNotNull(msg.getType());
-        resp.setBody(msgHandler.showMsg(msg));
+        resp.setMsgContent(msgHandler.showMsg(msg));
         return resp;
     }
 }

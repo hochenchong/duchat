@@ -2,9 +2,7 @@ package hochenchong.duchat.common.chat.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -18,11 +16,12 @@ import java.time.LocalDateTime;
  * @author hochenchong
  * @since 2024-08-02
  */
-@Getter
-@Setter
+@Data
 @Builder
 @TableName("t_message")
 @Schema(name = "Message", description = "消息表")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Message implements Serializable {
 
     @Serial

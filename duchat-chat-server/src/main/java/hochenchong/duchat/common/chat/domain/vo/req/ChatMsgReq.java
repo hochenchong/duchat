@@ -32,5 +32,5 @@ public class ChatMsgReq {
      */
     @Schema(description = "消息内容")
     @NotNull
-    private Object body;
+    private Object msgContent;
 }

@@ -37,17 +37,17 @@ public abstract class AbstractMsgHandler<T> {
      *
      * @param roodId 房间 id
      * @param uid 用户 id
-     * @param body 消息体
+     * @param msgContent 消息体
      */
-    abstract void checkMsg(Long roodId, Long uid, T body);
+    abstract void checkMsg(Long roodId, Long uid, T msgContent);
 
     /**
      * 子类扩展保存
      *
      * @param msg 保存的消息
-     * @param body 请求的消息
+     * @param msgContent 请求的消息
      */
-    abstract void saveMsg(Message msg, T body);
+    abstract void saveMsg(Message msg, T msgContent);
 
     /**
      * 展示消息
@@ -59,23 +59,23 @@ public abstract class AbstractMsgHandler<T> {
 
     @Transactional
     public Long checkAndSaveMsg(Long uid, ChatMsgReq msgReq) {
-        // 统一校验 body 的数据
-        T body = this.toBean(msgReq.getBody());
-        AssertUtils.checkValidateThrows(body);
+        // 统一校验 msgContent 的数据
+        T msgContent = this.toBean(msgReq.getMsgContent());
+        AssertUtils.checkValidateThrows(msgContent);
         // 子类扩展校验
-        checkMsg(msgReq.getRoomId(), uid, body);
+        checkMsg(msgReq.getRoomId(), uid, msgContent);
         Message insert = MessageAdapter.buildMsgSave(msgReq, uid);
         // 统一保存
         messageDao.save(insert);
         // 子类扩展保存
-        saveMsg(insert, body);
+        saveMsg(insert, msgContent);
         return insert.getId();
     }
 
-    private T toBean(Object body) {
-        if (tClass.isAssignableFrom(body.getClass())) {
-            return (T) body;
+    private T toBean(Object msgContent) {
+        if (tClass.isAssignableFrom(msgContent.getClass())) {
+            return (T) msgContent;
         }
-        return BeanUtil.toBean(body, tClass);
+        return BeanUtil.toBean(msgContent, tClass);
     }
 }

@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * 消息回包
@@ -31,10 +30,10 @@ public class ChatMsgResp {
     private Long fromUid;
 
     @Schema(description = "消息类型")
-    private Integer type;
+    private Integer msgType;
 
     @Schema(description = "消息内容")
-    private Object body;
+    private Object msgContent;
 
     @Schema(description = "消息创建时间")
     private LocalDateTime createTime;
