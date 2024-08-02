@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import hochenchong.duchat.common.common.constant.DateConstants;
 import hochenchong.duchat.common.common.domain.vo.request.CursorPageBaseReq;
 import hochenchong.duchat.common.common.domain.vo.response.CursorPageBaseResp;
 import hochenchong.duchat.common.utils.RedisUtils;
@@ -25,8 +26,6 @@ import java.util.function.Function;
  * @date 2024/08/01
  */
 public class CursorUtils {
-
-    public static final String DATA_FORMAT_PATTERN = "yyyy-MM-dd hh:mm:ss";
 
     public static <T> CursorPageBaseResp<Pair<T, Double>> getCursorPageByRedis(CursorPageBaseReq cursorPageBaseReq, String redisKey, Function<String, T> typeConvert) {
         Set<ZSetOperations.TypedTuple<String>> typedTuples;
@@ -84,7 +83,7 @@ public class CursorUtils {
             return String.valueOf(((Date) o).getTime());
         }
         if (o instanceof LocalDateTime) {
-            return ((LocalDateTime) o).format(DateTimeFormatter.ofPattern(DATA_FORMAT_PATTERN));
+            return ((LocalDateTime) o).format(DateTimeFormatter.ofPattern(DateConstants.DATA_TIME_FORMAT_PATTERN));
         }
         return o.toString();
     }
