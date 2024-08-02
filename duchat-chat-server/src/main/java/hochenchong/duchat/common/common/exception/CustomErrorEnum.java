@@ -21,6 +21,9 @@ public enum CustomErrorEnum implements ErrorEnum {
     ALREADY_FRIENDS(400_001_001, "已经是好友"),
     APPLY_RECORD_NOT_EXISTS(400_001_002, "申请记录不存在"),
     APPLY_RECORD_APPROVAL(400_001_003, "申请记录已审批"),
+
+    // 聊天相关 2xxx 开头
+    NOT_FRIEND(400_002_000, "你还不是对方好友"),
     ;
 
     private final Integer code;

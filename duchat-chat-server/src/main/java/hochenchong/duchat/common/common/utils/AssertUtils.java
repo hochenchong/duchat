@@ -1,8 +1,17 @@
 package hochenchong.duchat.common.common.utils;
 
 import cn.hutool.core.util.ObjectUtil;
+import hochenchong.duchat.common.common.exception.CommonErrorEnum;
+import hochenchong.duchat.common.common.exception.CustomErrorEnum;
 import hochenchong.duchat.common.common.exception.CustomException;
 import hochenchong.duchat.common.common.exception.ErrorEnum;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+
+import java.text.MessageFormat;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * 断言工具类
@@ -11,6 +20,8 @@ import hochenchong.duchat.common.common.exception.ErrorEnum;
  * @date 2024/07/25
  */
 public class AssertUtils {
+
+    private static Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     /**
      * 对象必须为空
@@ -86,11 +97,29 @@ public class AssertUtils {
         }
     }
 
+    public static <T> void checkValidateThrows(T body) {
+        Set<ConstraintViolation<T>> violations = validator.validate(body);
+        if (!violations.isEmpty()) {
+            StringBuilder errorMsg = new StringBuilder();
+            for (ConstraintViolation<T> violation : violations) {
+                errorMsg.append(violation.getPropertyPath().toString()).append(":").append(violation.getMessage()).append(",");
+            }
+            throwException(CustomErrorEnum.PARAM_INVALID, errorMsg.substring(0, errorMsg.length() - 1));
+        }
+    }
+
     private static boolean isEmpty(Object obj) {
         return ObjectUtil.isEmpty(obj);
     }
 
     private static void throwException(ErrorEnum errorEnum) {
         throw new CustomException(errorEnum);
+    }
+
+    private static void throwException(ErrorEnum errorEnum, Object... arg) {
+        if (Objects.isNull(errorEnum)) {
+            errorEnum = CommonErrorEnum.SYSTEM_ERROR;
+        }
+        throw new CustomException(errorEnum.getErrorCode(), MessageFormat.format(errorEnum.getErrorMsg(), arg));
     }
 }

@@ -1,6 +1,8 @@
 package hochenchong.duchat.common.user.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import hochenchong.duchat.common.chat.domain.entity.RoomFriend;
+import hochenchong.duchat.common.chat.service.RoomService;
 import hochenchong.duchat.common.common.annotation.RedissonLock;
 import hochenchong.duchat.common.common.domain.vo.request.CursorPageBaseReq;
 import hochenchong.duchat.common.common.domain.vo.request.PageBaseReq;
@@ -54,6 +56,9 @@ public class FriendServiceImpl implements FriendService {
     @Lazy
     private FriendService friendService;
 
+    @Autowired
+    private RoomService roomService;
+
     @Override
     public void apply(Long uid, FriendApplyReq req) {
         // 不能加自己
@@ -92,9 +97,18 @@ public class FriendServiceImpl implements FriendService {
         userApplyDao.agree(applyId);
         // 创建好友记录，两条记录
         createFriend(userApply.getUid(), userApply.getTargetId());
+        // 添加好友后，创建房间
+        RoomFriend roomFriend = roomService.createFriendRoom(userApply.getUid(), userApply.getTargetId());
     }
 
+    /**
+     * 删除好友
+     *
+     * @param uid 用户id
+     * @param friendUid 好友用户 id
+     */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteFriend(Long uid, Long friendUid) {
         List<UserFriend> friendIds = userFriendDao.getFriendIds(uid, friendUid);
         if (CollectionUtils.isEmpty(friendIds)) {
@@ -102,6 +116,8 @@ public class FriendServiceImpl implements FriendService {
             return;
         }
         userFriendDao.removeByIds(friendIds.stream().map(UserFriend::getId).toList());
+        // 禁用房间
+        roomService.delFriendRoom(uid, friendUid);
     }
 
     @Override
