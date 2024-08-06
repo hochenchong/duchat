@@ -1,6 +1,8 @@
 package hochenchong.duchat.common.chat.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
+import hochenchong.duchat.common.chat.domain.entity.msg.MessageExtra;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -60,8 +62,8 @@ public class Message implements Serializable {
     private Integer type;
 
     @Schema(description = "扩展信息")
-    @TableField("extra")
-    private String extra;
+    @TableField(value = "extra", typeHandler = JacksonTypeHandler.class)
+    private MessageExtra extra;
 
     @Schema(description = "创建时间")
     @TableField(value = "create_time", fill = FieldFill.INSERT)

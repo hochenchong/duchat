@@ -39,7 +39,7 @@ public abstract class AbstractMsgHandler<T> {
      * @param uid 用户 id
      * @param msgContent 消息体
      */
-    abstract void checkMsg(Long roodId, Long uid, T msgContent);
+    public void checkMsg(Long roodId, Long uid, T msgContent) {}
 
     /**
      * 子类扩展保存
