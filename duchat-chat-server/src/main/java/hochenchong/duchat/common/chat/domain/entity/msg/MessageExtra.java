@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
  * @date 2024/08/02
  */
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(description = "消息扩展信息")
