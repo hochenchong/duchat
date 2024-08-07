@@ -5,16 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>hochenchong</groupId>
-        <artifactId>duchat</artifactId>
+        <artifactId>duchat-framework</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>duchat-framework</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>duchat-common-starter</module>
-        <module>duchat-oss-starter</module>
-    </modules>
+    <artifactId>duchat-oss-starter</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -22,4 +17,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>hochenchong</groupId>
+            <artifactId>duchat-common-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+        </dependency>
+    </dependencies>
 </project>

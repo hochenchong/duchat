@@ -1,0 +1,3 @@
+# SpringBoot 3 以前的自动配置
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+hochenchong.duchat.oss.minio.MinioAutoConfiguration
