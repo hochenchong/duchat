@@ -22,6 +22,10 @@
             <groupId>hochenchong</groupId>
             <artifactId>duchat-common-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>hochenchong</groupId>
+            <artifactId>duchat-oss-starter</artifactId>
+        </dependency>
         <!-- 引入 mybatis-plus 代码生成器 -->
         <dependency>
             <groupId>com.baomidou</groupId>
