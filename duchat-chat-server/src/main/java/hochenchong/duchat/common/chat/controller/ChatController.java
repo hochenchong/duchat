@@ -3,6 +3,8 @@ package hochenchong.duchat.common.chat.controller;
 import hochenchong.duchat.common.chat.domain.vo.req.ChatMsgReq;
 import hochenchong.duchat.common.chat.domain.vo.resp.ChatMsgResp;
 import hochenchong.duchat.common.chat.service.ChatService;
+import hochenchong.duchat.common.common.annotation.FrequencyControl;
+import hochenchong.duchat.common.common.annotation.FrequencyControlContainer;
 import hochenchong.duchat.common.common.domain.vo.response.ApiResult;
 import hochenchong.duchat.common.common.utils.RequestHolder;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,6 +28,11 @@ public class ChatController {
 
     @PostMapping("/msg")
     @Operation(summary = "发送消息")
+    @FrequencyControlContainer({
+            @FrequencyControl(time = 5, count = 2, target = FrequencyControl.Target.UID),
+            @FrequencyControl(time = 30, count = 5, target = FrequencyControl.Target.UID),
+            @FrequencyControl(time = 60, count = 10, target = FrequencyControl.Target.UID)
+    })
     public ApiResult<ChatMsgResp> sendMsg(@Valid @RequestBody ChatMsgReq req) {
         Long msgId = chatService.sendMsg(RequestHolder.get().getUid(), req);
         // 返回完整消息格式，方便前端展示
