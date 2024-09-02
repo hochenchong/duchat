@@ -2,7 +2,6 @@ package hochenchong.duchat.common.chat.domain.entity.msg;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +16,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Schema(description = "消息扩展信息")
 public class MessageExtra {
+    @Schema(description = "文本消息")
+    private TextMsgDTO textMsgDTO;
     @Schema(description = "图片消息")
     private ImgMsgDTO imgMsgDTO;
     @Schema(description = "语音消息")

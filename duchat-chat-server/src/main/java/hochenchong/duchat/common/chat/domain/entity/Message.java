@@ -41,21 +41,9 @@ public class Message implements Serializable {
     @TableField("from_uid")
     private Long fromUid;
 
-    @Schema(description = "消息内容")
-    @TableField("content")
-    private String content;
-
-    @Schema(description = "回复的消息内容")
-    @TableField("reply_msg_id")
-    private Long replyMsgId;
-
     @Schema(description = "消息状态 0正常 1删除")
     @TableField("status")
     private Integer status;
-
-    @Schema(description = "与回复的消息间隔多少条")
-    @TableField("gap_count")
-    private Integer gapCount;
 
     @Schema(description = "消息类型")
     @TableField("type")

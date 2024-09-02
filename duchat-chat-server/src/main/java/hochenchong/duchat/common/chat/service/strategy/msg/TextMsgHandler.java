@@ -2,18 +2,20 @@ package hochenchong.duchat.common.chat.service.strategy.msg;
 
 import hochenchong.duchat.common.chat.dao.MessageDao;
 import hochenchong.duchat.common.chat.domain.entity.Message;
+import hochenchong.duchat.common.chat.domain.entity.msg.MessageExtra;
+import hochenchong.duchat.common.chat.domain.entity.msg.TextMsgDTO;
 import hochenchong.duchat.common.chat.domain.enums.MsgTypeEnum;
-import hochenchong.duchat.common.chat.domain.vo.req.TextMsgReq;
-import hochenchong.duchat.common.chat.domain.vo.resp.TextMsgResp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 /**
  * @author hochenchong
  * @date 2024/08/02
  */
 @Component
-public class TextMsgHandler extends AbstractMsgHandler<TextMsgReq> {
+public class TextMsgHandler extends AbstractMsgHandler<TextMsgDTO> {
     @Autowired
     private MessageDao messageDao;
 
@@ -23,22 +25,24 @@ public class TextMsgHandler extends AbstractMsgHandler<TextMsgReq> {
     }
 
     @Override
-    public void checkMsg(Long roodId, Long uid, TextMsgReq body) {
+    public void checkMsg(Long roodId, Long uid, TextMsgDTO body) {
         // TODO 校验屏蔽字
     }
 
     @Override
-    void saveMsg(Message msg, TextMsgReq body) {
+    void saveMsg(Message msg, TextMsgDTO body) {
+        // 保存图片相关信息
+        MessageExtra extra = Optional.ofNullable(msg.getExtra()).orElse(new MessageExtra());
+        extra.setTextMsgDTO(body);
+
         Message update = new Message();
         update.setId(msg.getId());
-        update.setContent(body.getText());
+        update.setExtra(extra);
         messageDao.updateById(update);
     }
 
     @Override
     public Object showMsg(Message msg) {
-        TextMsgResp resp = new TextMsgResp();
-        resp.setText(msg.getContent());
-        return resp;
+        return msg.getExtra().getTextMsgDTO();
     }
 }
